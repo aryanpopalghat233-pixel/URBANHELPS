@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard - UrbanHelps</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="/">🏠 UrbanHelps</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showTab('bookings')">My Bookings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showTab('services')">Book Service</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showTab('tracking')">Track Worker</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-warning btn-sm ms-2" onclick="logout()">Logout</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid p-4">
+        <!-- My Bookings Tab -->
+        <div id="bookingsTab" class="tab-content">
+            <h2 class="mb-4">📋 My Bookings</h2>
+            <div id="bookingsList" class="row"></div>
+        </div>
+
+        <!-- Book Service Tab -->
+        <div id="servicesTab" class="tab-content" style="display:none;">
+            <h2 class="mb-4">🛎️ Book a Service</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">Select Service</h5>
+                            <form id="bookingForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Service Type</label>
+                                    <select class="form-select" id="serviceSelect" required>
+                                        <option value="">-- Select Service --</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Location</label>
+                                    <input type="text" class="form-control" id="bookingLocation" placeholder="Your address" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Description</label>
+                                    <textarea class="form-control" id="bookingDescription" rows="3" placeholder="Any special requirements?"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Book Service</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div id="servicesGrid" class="row g-3"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tracking Tab -->
+        <div id="trackingTab" class="tab-content" style="display:none;">
+            <h2 class="mb-4">📍 Track Worker Location</h2>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <div id="map" style="height: 500px; border-radius: 8px; overflow: hidden;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">Active Booking</h5>
+                            <div id="trackingInfo">
+                                <p class="text-muted">No active booking</p>
+                            </div>
+                            <div id="etaInfo" class="mt-3" style="display:none;">
+                                <div class="alert alert-info">
+                                    <p><strong>Estimated Arrival:</strong> <span id="etaTime">--</span></p>
+                                    <p><strong>Distance:</strong> <span id="etaDistance">--</span> km</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Modal for Tracking -->
+    <div id="trackingModal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Select Booking to Track</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="trackingBookings"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/customer.js"></script>
+</body>
+</html>
