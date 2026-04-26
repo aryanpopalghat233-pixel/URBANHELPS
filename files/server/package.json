@@ -1,7 +1,7 @@
 {
   "name": "urbanhelps-server",
   "version": "1.0.0",
-  "description": "Urban Company Clone Backend",
+  "description": "Urban Company",
   "main": "server.js",
   "scripts": {
   "start": "node server.js",
